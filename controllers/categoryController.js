@@ -34,7 +34,7 @@ export const editCategory = async (req, res) => {
 
         if (!foundCategory) return res.status(404).send('category does not exist!');
 
-        // if (image && foundCategory.image) removeImage(foundCategory.image);
+        if (image && foundCategory.image) removeImage(foundCategory.image);
 
         const category = await Category.findByIdAndUpdate(id, { name, image }, { new: true })
 
