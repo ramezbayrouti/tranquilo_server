@@ -14,7 +14,7 @@ const app = express();
 
 //CORS Policies
 app.use(cors({
-    origin: ["http://localhost:3000", "https://tranquilo-client.vercel.app/"],
+    origin: ["http://localhost:3000", "https://tranquilo-client.vercel.app/", "https://tranquilo-client.vercel.app"],
     credentials: true,
     optionsSuccessStatus: 200,
 }
