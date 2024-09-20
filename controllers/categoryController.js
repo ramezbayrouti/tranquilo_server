@@ -28,7 +28,13 @@ export const editCategory = async (req, res) => {
     try {
         const { id } = req.params;
         const { name } = req.body;
-        const image = req.file?.filename;
+
+        let image;
+
+        if (req.file) {
+            const imagePath = req.file.path;
+            image = await uploadToImageBB(imagePath);
+        };
 
         const foundCategory = await Category.findById(id);
 
@@ -103,14 +109,14 @@ export const getAllCategories = async (req, res) => {
 
 export const updateOrder = async (req, res) => {
     try {
-      const { categories } = req.body; // Expecting an array of { id, order }
-      const updatePromises = categories.map(category => 
-        Category.findByIdAndUpdate(category.id, { order: category.order })
-      );
-      await Promise.all(updatePromises);
-      res.status(200).json({ message: "Order updated successfully" });
+        const { categories } = req.body; // Expecting an array of { id, order }
+        const updatePromises = categories.map(category =>
+            Category.findByIdAndUpdate(category.id, { order: category.order })
+        );
+        await Promise.all(updatePromises);
+        res.status(200).json({ message: "Order updated successfully" });
     } catch (error) {
-      res.status(500).json({ message: "Problem updating order!", error: error.message });
-      console.log(error);
+        res.status(500).json({ message: "Problem updating order!", error: error.message });
+        console.log(error);
     }
-  };
+};
