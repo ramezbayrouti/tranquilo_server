@@ -1,5 +1,6 @@
 import Category from "../models/categoryModel.js";
 import removeImage from "../utils/removeImage.js";
+import uploadToImageBB from "../utils/uploadToImageBB.js";
 
 // create category
 export const createCategory = async (req, res) => {
