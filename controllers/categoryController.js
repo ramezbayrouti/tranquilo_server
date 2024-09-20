@@ -1,12 +1,17 @@
 import Category from "../models/categoryModel.js";
-import removeImage from "../utils/removeImage.js";
+// import removeImage from "../utils/removeImage.js";
 import uploadToImageBB from "../utils/uploadToImageBB.js";
 
 // create category
 export const createCategory = async (req, res) => {
     try {
         const { name } = req.body;
-        const image = req.file?.filename;
+        let image;
+
+        if (req.file) {
+            const imagePath = req.file.path;
+            image = await uploadToImageBB(imagePath);
+        };
 
         const category = new Category({
             name,
@@ -61,7 +66,7 @@ export const deleteCategory = async (req, res) => {
         const { id } = req.params;
         const foundCategory = await Category.findById(id);
         if (!foundCategory) return res.status(404).send('category does not exist!');
-        if (foundCategory.image) removeImage(foundCategory.image);
+        // if (foundCategory.image) removeImage(foundCategory.image);
 
         const category = await Category.findByIdAndDelete(id)
 
